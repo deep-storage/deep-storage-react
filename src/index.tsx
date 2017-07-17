@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { DeepStorage, Path, Subscription, parsePaths, stringOrNumber } from "deep-storage";
+import { DeepStorage, Path, DeepSubscription, parsePaths, stringOrNumber } from "deep-storage";
 
 export const deep = <State extends {}>(storage: DeepStorage<State>, paths: { [key: string]: Path | stringOrNumber }) => <P extends {}>(BaseComponent: React.ComponentType<P>) => {
     const parsedPaths = parsePaths(paths);
     return class extends React.Component<P, {}> {
-        subscription: Subscription;
+        subscription: DeepSubscription;
         componentDidMount() {
             this.subscription = storage.subscription((...args: any[]) => {
                 this.forceUpdate();

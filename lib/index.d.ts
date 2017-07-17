@@ -1,11 +1,11 @@
 /// <reference types="react" />
 import * as React from 'react';
-import { DeepStorage, Subscription } from "deep-storage";
+import { DeepStorage, DeepSubscription } from "deep-storage";
 export declare const deep: <State extends {}>(storage: DeepStorage<State>, paths: {
     [key: string]: string | number | (string | number)[];
 }) => <P extends {}>(BaseComponent: React.ComponentType<P>) => {
     new (props?: P, context?: any): {
-        subscription: Subscription;
+        subscription: DeepSubscription;
         componentDidMount(): void;
         componentWillUnmount(): void;
         shouldComponentUpdate(nextProps: P, nextState: {}): boolean;

@@ -4,6 +4,10 @@
   "description": "Simple observable state management for reactive applications",
   "main": "lib/index.js",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/deep-storage/deep-storage-react.git"
+  },
   "devDependencies": {
     "@types/jest": "^20.0.2",
     "@types/react": "^15.0.38",
@@ -19,7 +23,7 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "deep-storage": "^0.1.0",
+    "deep-storage": "^0.1.2",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
   }
