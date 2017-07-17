@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DeepStorage, Path, Subscription, parsePaths, stringOrNumber } from "../index";
+import { DeepStorage, Path, Subscription, parsePaths, stringOrNumber } from "deep-storage";
 
 export const deep = <State extends {}>(storage: DeepStorage<State>, paths: { [key: string]: Path | stringOrNumber }) => <P extends {}>(BaseComponent: React.ComponentType<P>) => {
     const parsedPaths = parsePaths(paths);

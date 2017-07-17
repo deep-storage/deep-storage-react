@@ -15,8 +15,9 @@
   },
   "scripts": {
     "test": "jest",
-    "build": "tsc"
+    "build": "rimraf lib && tsc"
   },
+  "types": "lib/index.d.ts",
   "dependencies": {
     "deep-storage": "^0.1.0",
     "react": "^15.6.1",
