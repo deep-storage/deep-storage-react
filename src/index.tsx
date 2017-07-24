@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { DeepStorage, Path, DeepSubscription, parsePaths, stringOrNumber } from "deep-storage";
 
-export const deep = <State extends {}, P>(
+export const deep = <State extends {}, P, K extends keyof P>(
     storage: DeepStorage<State>,
     paths: { [key: string]: Path | stringOrNumber },
-    ownProps?: { [key: string]: Partial<P> }) => (BaseComponent: React.ComponentType<P>) => {
+    ownProps?: { [key in K]: P[K] }) => (BaseComponent: React.ComponentType<P>) => {
         const parsedPaths = parsePaths(paths);
         return class extends React.Component<P, {}> {
             subscription: DeepSubscription;
