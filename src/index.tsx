@@ -4,7 +4,7 @@ import { DeepStorage, Path, DeepSubscription, parsePaths, stringOrNumber } from 
 export const deep = <State extends {}, P>(
     storage: DeepStorage<State>,
     paths: { [key: string]: Path | stringOrNumber },
-    ownProps: { [key: string]: Partial<P> }) => (BaseComponent: React.ComponentType<P>) => {
+    ownProps?: { [key: string]: Partial<P> }) => (BaseComponent: React.ComponentType<P>) => {
         const parsedPaths = parsePaths(paths);
         return class extends React.Component<P, {}> {
             subscription: DeepSubscription;
@@ -30,7 +30,7 @@ export const deep = <State extends {}, P>(
             }
             render() {
                 const anyProps: any = this.props;
-                const newProps: any = { ...anyProps, ...ownProps };
+                const newProps: any = { ...anyProps, ...(ownProps || {}) };
                 for (let key in parsedPaths) {
                     newProps[key] = storage.stateIn(...parsedPaths[key])
                 }
