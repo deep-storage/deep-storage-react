@@ -2,17 +2,28 @@ import * as React from 'react';
 import { DeepStorage, Path, DeepSubscription, parsePaths, stringOrNumber } from "deep-storage";
 
 export const deep = <State extends {}, P, K extends keyof P>(
-    storage: DeepStorage<State>,
-    paths: { [key: string]: Path | stringOrNumber },
-    ownProps?: { [key in K]: P[K] }) => (BaseComponent: React.ComponentType<P>) => {
-        const parsedPaths = parsePaths(paths);
+    deepProps: { [key: string]: DeepStorage<State> },
+    ownProps?: {[key in K]: P[K]}) => (BaseComponent: React.ComponentType<P>) => {
+
+        const keys = Object.keys(deepProps);
+        if (keys.length === 0) throw 'No deep properties specified';
+
+        const rootStorage = deepProps[keys[0]].root();
+        const parsedPaths = {} as { [key: string]: Path };
+
+        // go through each of the storages... we're going to assume for now that
+        // they all have the same root
+        for (let key of Object.keys(deepProps)) {
+            parsedPaths[key] = deepProps[key].path;
+        }
+
         return class extends React.Component<P, {}> {
             subscription: DeepSubscription;
             componentDidMount() {
-                this.subscription = storage.subscription((...args: any[]) => {
+                this.subscription = rootStorage.subscription((...args: any[]) => {
                     this.forceUpdate();
                 });
-                for (let key in paths) {
+                for (let key in deepProps) {
                     this.subscription.subscribeTo(...parsedPaths[key]);
                 }
             }
@@ -22,7 +33,7 @@ export const deep = <State extends {}, P, K extends keyof P>(
             shouldComponentUpdate(nextProps: P, nextState: {}) {
                 const nextPropsAny: any = nextProps;
                 for (let key in parsedPaths) {
-                    if (nextPropsAny[key] !== storage.stateIn(...parsedPaths[key])) {
+                    if (nextPropsAny[key] !== rootStorage.stateIn(...parsedPaths[key])) {
                         return true;
                     }
                 }
@@ -32,7 +43,7 @@ export const deep = <State extends {}, P, K extends keyof P>(
                 const anyProps: any = this.props;
                 const newProps: any = { ...anyProps, ...(ownProps || {}) };
                 for (let key in parsedPaths) {
-                    newProps[key] = storage.stateIn(...parsedPaths[key])
+                    newProps[key] = rootStorage.stateIn(...parsedPaths[key])
                 }
                 return <BaseComponent {...newProps} />;
             }
