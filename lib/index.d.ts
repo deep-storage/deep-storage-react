@@ -1,8 +1,8 @@
 /// <reference types="react" />
 import * as React from 'react';
 import { DeepStorage, DeepSubscription } from "deep-storage";
-export declare const deep: <State extends {}, P, K extends keyof P>(storage: DeepStorage<State>, paths: {
-    [key: string]: string | number | (string | number)[];
+export declare const deep: <State extends {}, P, K extends keyof P>(deepProps: {
+    [key: string]: DeepStorage<State, {}>;
 }, ownProps?: {
     [key in K]: P[K];
 }) => (BaseComponent: React.ComponentType<P>) => {

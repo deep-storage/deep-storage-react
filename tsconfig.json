@@ -6,7 +6,19 @@
         "module": "commonjs",
         "target": "es5",
         "jsx": "react",
-        "declaration": true
+        "declaration": true,
+        "baseUrl": ".",
+        "lib": [
+            "dom", "es6"
+        ],
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "paths": {
+            "react": [
+                "node_modules/@types/react"
+            ]
+        }
     },
     "include": [
         "./src/**/*"
