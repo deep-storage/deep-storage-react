@@ -1,20 +1,34 @@
 import * as React from 'react';
-import { DeepStorage, Path, DeepSubscription, parsePaths, stringOrNumber } from "deep-storage";
+import { DeepStorage, Path, DeepSubscription, parsePaths, stringOrNumber, UsesDeepStorage } from "deep-storage";
+
+function isUsesDeepStorage<State>(
+    value: DeepStorage<State> | UsesDeepStorage<State>
+): value is UsesDeepStorage<State> {
+    return (value as UsesDeepStorage<State>).storage !== undefined;
+}
+
+function getStorage<State>(value: DeepStorage<State> | UsesDeepStorage<State>) {
+    if(isUsesDeepStorage(value)) {
+        return value.storage;
+    } else {
+        return value;
+    }
+}
 
 export const deep = <State extends {}, P, K extends keyof P>(
-    deepProps: { [key: string]: DeepStorage<State> },
+    deepProps: { [key: string]: DeepStorage<State> | UsesDeepStorage<State> },
     ownProps?: {[key in K]: P[K]}) => (BaseComponent: React.ComponentType<P>) => {
 
         const keys = Object.keys(deepProps);
         if (keys.length === 0) throw 'No deep properties specified';
 
-        const rootStorage = deepProps[keys[0]].root();
+        const rootStorage = getStorage(deepProps[keys[0]]).root();
         const parsedPaths = {} as { [key: string]: Path };
 
         // go through each of the storages... we're going to assume for now that
         // they all have the same root
         for (let key of Object.keys(deepProps)) {
-            parsedPaths[key] = deepProps[key].path;
+            parsedPaths[key] = getStorage(deepProps[key]).path;
         }
 
         return class extends React.Component<P, {}> {
@@ -43,7 +57,12 @@ export const deep = <State extends {}, P, K extends keyof P>(
                 const anyProps: any = this.props;
                 const newProps: any = { ...anyProps, ...(ownProps || {}) };
                 for (let key in parsedPaths) {
-                    newProps[key] = rootStorage.stateIn(...parsedPaths[key])
+                    const value = deepProps[key];
+                    if(isUsesDeepStorage(value)) {
+                        newProps[key] = value;
+                    } else {
+                        newProps[key] = value.state;
+                    }
                 }
                 return <BaseComponent {...newProps} />;
             }
