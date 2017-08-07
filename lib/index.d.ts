@@ -29,3 +29,4 @@ export declare const connect: <State extends {}, P, K extends keyof P>(deepProps
         componentDidUpdate?(prevProps: Readonly<P>, prevState: Readonly<{}>, prevContext: any): void;
     };
 };
+export default connect;

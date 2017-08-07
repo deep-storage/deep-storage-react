@@ -68,3 +68,5 @@ export const connect = <State extends {}, P, K extends keyof P>(
             }
         };
     }
+
+    export default connect;
