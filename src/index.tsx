@@ -15,7 +15,7 @@ function getStorage<State>(value: DeepStorage<State> | UsesDeepStorage<State>) {
     }
 }
 
-export const deep = <State extends {}, P, K extends keyof P>(
+export const connect = <State extends {}, P, K extends keyof P>(
     deepProps: { [key: string]: DeepStorage<State> | UsesDeepStorage<State> },
     ownProps?: {[key in K]: P[K]}) => (BaseComponent: React.ComponentType<P>) => {
 
