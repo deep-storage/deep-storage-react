@@ -871,9 +871,9 @@ deep-is@~0.1.3:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/deep-is/-/deep-is-0.1.3.tgz#b369d6fb5dbc13eecf524f91b070feedc357cf34"
 
-deep-storage@^0.3.5:
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/deep-storage/-/deep-storage-0.3.5.tgz#11fb86b7947d1ba657efdc0fbd87e016a2ec4607"
+deep-storage@^0.3.6:
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/deep-storage/-/deep-storage-0.3.6.tgz#0390a65519faf1179b9374e4b910dadb3184dcf3"
 
 default-require-extensions@^1.0.0:
   version "1.0.0"
