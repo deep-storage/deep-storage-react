@@ -1,6 +1,6 @@
 {
   "name": "deep-storage-react",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "Simple observable state management for reactive applications",
   "main": "lib/index.js",
   "license": "MIT",
