@@ -30,7 +30,7 @@ export const connect = <PropsType extends {}, Key extends keyof PropsType>(
         // if no deep props specified, just return regular component
         if (keys.length === 0) return class extends React.Component<PropsType, {}> {
             render() {
-                return <BaseComponent {...(ownProps || {})} />;
+                return <BaseComponent {...(ownProps || {})} {...this.props} />;
             }
         };
 
