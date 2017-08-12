@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { DeepStorage, Path, DeepSubscription, parsePaths, stringOrNumber, UsesDeepStorage } from "deep-storage";
 
+export * from './forms';
+
 export interface ComponentCreator<P = {}> {
     component: React.ComponentType<P>;
 }

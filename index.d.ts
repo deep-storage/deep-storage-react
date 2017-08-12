@@ -1,6 +1,7 @@
 /// <reference types="react" />
 import * as React from 'react';
 import { DeepStorage, UsesDeepStorage } from "deep-storage";
+export * from './forms';
 export interface ComponentCreator<P = {}> {
     component: React.ComponentType<P>;
 }
