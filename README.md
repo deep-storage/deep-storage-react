@@ -8,6 +8,7 @@ Deep Storage provides observable state for reactive applications in JavaScript.
 * Optimised for use with React
 * No global state
 * Simple way to manage shared state with or without a fully fledged flux pattern
+* Built in form support
 
 ## Documentation
 
