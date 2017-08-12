@@ -1,4 +1,4 @@
-import { DeepStorage } from "deep-storage/lib";
+import { DeepStorage } from "deep-storage";
 
 export interface DeepFormField {
     value?: string | number;
