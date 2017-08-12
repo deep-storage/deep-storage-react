@@ -1,6 +1,10 @@
 import * as React from 'react';
 import { DeepStorage, Path, DeepSubscription, parsePaths, stringOrNumber, UsesDeepStorage } from "deep-storage";
 
+export interface ComponentCreator<P = {}> {
+    component: React.ComponentType<P>;
+}
+
 function isUsesDeepStorage<State>(
     value: DeepStorage<State> | UsesDeepStorage<State>
 ): value is UsesDeepStorage<State> {
