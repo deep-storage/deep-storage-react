@@ -1,6 +1,9 @@
 /// <reference types="react" />
 import * as React from 'react';
 import { DeepStorage, UsesDeepStorage } from "deep-storage";
+export interface ComponentCreator<P = {}> {
+    component: React.ComponentType<P>;
+}
 export declare const connect: <PropsType extends {}, Key extends keyof PropsType>(deepProps: {
     [key in Key]: DeepStorage<PropsType[Key], {}> | UsesDeepStorage<PropsType[Key]>;
 }, ownProps?: {
