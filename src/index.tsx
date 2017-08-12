@@ -20,7 +20,13 @@ export const connect = <PropsType extends {}, Key extends keyof PropsType>(
     ownProps?: {[key in Key]: PropsType[Key]}) => (BaseComponent: React.ComponentType<PropsType>) => {
 
         const keys = Object.keys(deepProps);
-        if (keys.length === 0) throw 'No deep properties specified';
+
+        // if no deep props specified, just return regular component
+        if (keys.length === 0) return class extends React.Component<PropsType, {}> {
+            render() {
+                return <BaseComponent {...(ownProps || {})} />;
+            }
+        };
 
         const rootStorage = getStorage(deepProps[keys[0]]).root();
         const parsedPaths = {} as { [key: string]: Path };

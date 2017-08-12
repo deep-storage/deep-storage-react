@@ -19,11 +19,12 @@
   },
   "scripts": {
     "test": "jest",
-    "build": "rimraf lib && tsc"
+    "build": "rimraf lib *.d.ts && tsc",
+    "publish-patch": "yarn build && git commit -am 'build' && git push && npm version patch && git push && npm publish"
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "deep-storage": "^0.3.7",
+    "deep-storage": "^1.0.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
   }
