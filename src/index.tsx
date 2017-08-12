@@ -8,16 +8,16 @@ function isUsesDeepStorage<State>(
 }
 
 function getStorage<State>(value: DeepStorage<State> | UsesDeepStorage<State>) {
-    if(isUsesDeepStorage(value)) {
+    if (isUsesDeepStorage(value)) {
         return value.storage;
     } else {
         return value;
     }
 }
 
-export const connect = <State extends {}, P, K extends keyof P>(
-    deepProps: { [key: string]: DeepStorage<State> | UsesDeepStorage<State> },
-    ownProps?: {[key in K]: P[K]}) => (BaseComponent: React.ComponentType<P>) => {
+export const connect = <PropsType extends {}, Key extends keyof PropsType>(
+    deepProps: {[key in Key]: DeepStorage<PropsType[Key]> | UsesDeepStorage<PropsType[Key]> },
+    ownProps?: {[key in Key]: PropsType[Key]}) => (BaseComponent: React.ComponentType<PropsType>) => {
 
         const keys = Object.keys(deepProps);
         if (keys.length === 0) throw 'No deep properties specified';
@@ -31,7 +31,7 @@ export const connect = <State extends {}, P, K extends keyof P>(
             parsedPaths[key] = getStorage(deepProps[key]).path;
         }
 
-        return class extends React.Component<P, {}> {
+        return class extends React.Component<PropsType, {}> {
             subscription: DeepSubscription;
             componentDidMount() {
                 this.subscription = rootStorage.subscription((...args: any[]) => {
@@ -44,7 +44,7 @@ export const connect = <State extends {}, P, K extends keyof P>(
             componentWillUnmount() {
                 this.subscription && this.subscription.cancel();
             }
-            shouldComponentUpdate(nextProps: P, nextState: {}) {
+            shouldComponentUpdate(nextProps: PropsType, nextState: {}) {
                 const nextPropsAny: any = nextProps;
                 for (let key in parsedPaths) {
                     if (nextPropsAny[key] !== rootStorage.stateIn(...parsedPaths[key])) {
@@ -58,7 +58,7 @@ export const connect = <State extends {}, P, K extends keyof P>(
                 const newProps: any = { ...anyProps, ...(ownProps || {}) };
                 for (let key in parsedPaths) {
                     const value = deepProps[key];
-                    if(isUsesDeepStorage(value)) {
+                    if (isUsesDeepStorage(value)) {
                         newProps[key] = value;
                     } else {
                         newProps[key] = value.state;
@@ -69,4 +69,4 @@ export const connect = <State extends {}, P, K extends keyof P>(
         };
     }
 
-    export default connect;
+export default connect;
