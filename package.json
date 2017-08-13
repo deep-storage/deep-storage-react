@@ -24,7 +24,7 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "deep-storage": "^1.0.8",
+    "deep-storage": "^1.0.9",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
   }
