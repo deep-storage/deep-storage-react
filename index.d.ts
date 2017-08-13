@@ -2,8 +2,10 @@
 import * as React from 'react';
 import { DeepStorage, UsesDeepStorage } from "deep-storage";
 export * from './forms';
-export interface ComponentCreator<P = {}> {
-    component: () => Promise<React.ComponentType<P>>;
+export interface AsyncFactory<T> {
+    create: () => Promise<T>;
+}
+export interface ComponentCreator<P = {}> extends AsyncFactory<React.ComponentType<P>> {
 }
 export declare const connect: <PropsType extends {}, Key extends keyof PropsType>(deepProps: {
     [key in Key]: DeepStorage<PropsType[Key], {}> | UsesDeepStorage<PropsType[Key]>;

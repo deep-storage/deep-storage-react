@@ -3,8 +3,11 @@ import { DeepStorage, Path, DeepSubscription, parsePaths, stringOrNumber, UsesDe
 
 export * from './forms';
 
-export interface ComponentCreator<P = {}> {
-    component: () => Promise<React.ComponentType<P>>;
+export interface AsyncFactory<T> {
+    create: () => Promise<T>;
+}
+
+export interface ComponentCreator<P = {}> extends AsyncFactory<React.ComponentType<P>> {
 }
 
 function isUsesDeepStorage<State>(
