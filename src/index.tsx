@@ -4,7 +4,7 @@ import { DeepStorage, Path, DeepSubscription, parsePaths, stringOrNumber, UsesDe
 export * from './forms';
 
 export interface ComponentCreator<P = {}> {
-    component: React.ComponentType<P>;
+    component: () => Promise<React.ComponentType<P>>;
 }
 
 function isUsesDeepStorage<State>(
