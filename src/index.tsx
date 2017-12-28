@@ -25,8 +25,8 @@ function getStorage<State>(value: DeepStorage<State> | UsesDeepStorage<State>) {
 }
 
 export const connect = <PropsType extends {}>(
-    deepProps: {[key in keyof PropsType]: DeepStorage<PropsType[key]> | UsesDeepStorage<PropsType[key]> },
-    ownProps?: {[key in keyof PropsType]: PropsType[key]}) => (BaseComponent: React.ComponentType<PropsType>) => {
+    deepProps: {[key in keyof PropsType]?: DeepStorage<PropsType[key]> | UsesDeepStorage<PropsType[key]> },
+    ownProps?: {[key in keyof PropsType]?: PropsType[key]}) => (BaseComponent: React.ComponentType<PropsType>) => {
 
         const keys = Object.keys(deepProps) as (keyof PropsType)[];
 
@@ -70,7 +70,7 @@ export const connect = <PropsType extends {}>(
             }
             render() {
                 const anyProps: any = this.props;
-                const newProps: any = { ...anyProps, ...(ownProps || {}) };
+                const newProps: any = Object.assign({}, anyProps, ownProps || {});
                 for (let key in parsedPaths) {
                     const value = deepProps[key as keyof PropsType];
                     if (isUsesDeepStorage(value)) {
