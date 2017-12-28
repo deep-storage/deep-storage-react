@@ -1,4 +1,5 @@
 import { DeepStorage } from "deep-storage";
+import * as React from 'react';
 
 export interface DeepFormField {
     value?: string | number;

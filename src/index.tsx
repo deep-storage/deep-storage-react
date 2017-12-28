@@ -24,11 +24,11 @@ function getStorage<State>(value: DeepStorage<State> | UsesDeepStorage<State>) {
     }
 }
 
-export const connect = <PropsType extends {}, Key extends keyof PropsType>(
-    deepProps: {[key in Key]: DeepStorage<PropsType[Key]> | UsesDeepStorage<PropsType[Key]> },
-    ownProps?: {[key in Key]: PropsType[Key]}) => (BaseComponent: React.ComponentType<PropsType>) => {
+export const connect = <PropsType extends {}>(
+    deepProps: {[key in keyof PropsType]: DeepStorage<PropsType[key]> | UsesDeepStorage<PropsType[key]> },
+    ownProps?: {[key in keyof PropsType]: PropsType[key]}) => (BaseComponent: React.ComponentType<PropsType>) => {
 
-        const keys = Object.keys(deepProps);
+        const keys = Object.keys(deepProps) as (keyof PropsType)[];
 
         // if no deep props specified, just return regular component
         if (keys.length === 0) return class extends React.Component<PropsType, {}> {
@@ -42,7 +42,7 @@ export const connect = <PropsType extends {}, Key extends keyof PropsType>(
 
         // go through each of the storages... we're going to assume for now that
         // they all have the same root
-        for (let key of Object.keys(deepProps)) {
+        for (let key of keys) {
             parsedPaths[key] = getStorage(deepProps[key]).path;
         }
 
@@ -72,11 +72,11 @@ export const connect = <PropsType extends {}, Key extends keyof PropsType>(
                 const anyProps: any = this.props;
                 const newProps: any = { ...anyProps, ...(ownProps || {}) };
                 for (let key in parsedPaths) {
-                    const value = deepProps[key];
+                    const value = deepProps[key as keyof PropsType];
                     if (isUsesDeepStorage(value)) {
                         newProps[key] = value;
                     } else {
-                        newProps[key] = value.state;
+                        newProps[key] = (value as DeepStorage<PropsType[keyof PropsType]>).state;
                     }
                 }
                 return <BaseComponent {...newProps} />;
