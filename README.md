@@ -33,7 +33,7 @@ See an [implementation of TodoMVC that uses Deep Storage](https://github.com/dee
 
 ### 1. Create a new Deep Storage instance and initialise its state
 
-    const storage = new DeepStorage({
+    const storage = await deepStorage({
         timer: 0
     });
 
