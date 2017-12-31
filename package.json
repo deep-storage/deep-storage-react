@@ -20,11 +20,12 @@
   "scripts": {
     "test": "jest",
     "build": "rimraf lib *.d.ts && tsc -p tsconfig.prod.json",
-    "publish-patch": "yarn build && git commit -am 'build' && git push && npm version patch && git push"
+    "publish-patch": "yarn build && git commit -am 'build' && git push && npm version patch && git push",
+    "publish-major": "yarn build && git commit -am 'build' && git push && npm version patch && git push"
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "deep-storage": "^2.0.3",
+    "deep-storage": "^3.0.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   }
