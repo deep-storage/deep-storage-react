@@ -70,4 +70,3 @@ See an [implementation of TodoMVC that uses Deep Storage](https://github.com/dee
         storage.updateIn('timer')(prev => prev + 1);
     }, 1000);
 
-
