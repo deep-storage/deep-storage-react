@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`connect: start 1`] = `
+<div>
+  <div
+    className="test"
+  >
+    message 1
+  </div>
+  <div
+    className="test"
+  >
+    updated message 2
+  </div>
+</div>
+`;
+
+exports[`connect: update 1`] = `
+<div>
+  <div
+    className="test"
+  >
+    message 1
+  </div>
+  <div
+    className="test"
+  >
+    updated message 3
+  </div>
+</div>
+`;

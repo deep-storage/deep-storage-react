@@ -1,27 +1,11 @@
 {
     "compilerOptions": {
-        "outDir": "./lib/",
-        "sourceMap": true,
-        "noImplicitAny": true,
-        "module": "commonjs",
-        "target": "es5",
-        "jsx": "react",
-        "declaration": true,
-        "declarationDir": ".",
-        "baseUrl": ".",
-        "lib": [
-            "dom", "es6"
-        ],
-        "typeRoots": [
-            "node_modules/@types"
-        ],
-        "paths": {
-            "react": [
-                "node_modules/@types/react"
-            ]
-        }
-    },
-    "include": [
-        "./src/**/*"
-    ]
-}
+      "target": "es5",
+      "module": "commonjs",
+      "lib": ["es2015", "dom"],
+      "jsx": "react",
+      "outDir": "./lib",
+      "strict": true,
+      "esModuleInterop": true
+    }
+  }

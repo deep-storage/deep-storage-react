@@ -1,6 +1,6 @@
 {
   "name": "deep-storage-react",
-  "version": "3.0.0",
+  "version": "5.0.0",
   "description": "Simple observable state management for reactive applications",
   "main": "lib/index.js",
   "license": "MIT",
@@ -9,24 +9,27 @@
     "url": "https://github.com/deep-storage/deep-storage-react.git"
   },
   "devDependencies": {
-    "@types/jest": "^21.1.10",
-    "@types/react": "^16.0.31",
-    "@types/react-dom": "^16.0.3",
-    "jest": "^22.0.4",
-    "typescript": "^2.6.2",
-    "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.9.7"
+    "@types/enzyme": "^3.1.11",
+    "@types/jest": "^23.1.5",
+    "@types/react": "^16.4.6",
+    "@types/react-dom": "^16.0.6",
+    "@types/react-test-renderer": "^16.0.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "jest": "^23.4.0",
+    "react-test-renderer": "^16.4.1",
+    "typescript": "^2.9.2"
   },
   "scripts": {
     "test": "jest",
     "build": "rimraf lib *.d.ts && tsc -p tsconfig.prod.json",
-    "publish-patch": "yarn build && git commit -am 'build' && git push && npm version patch && git push",
-    "publish-major": "yarn build && git commit -am 'build' && git push && npm version major && git push"
+    "publish:patch": "yarn build && git commit -am 'build' && git push && npm version patch && git push",
+    "publish:major": "yarn build && git commit -am 'build' && git push && npm version major && git push"
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "deep-storage": "^3.0.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "deep-storage": "^5.0.0",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
   }
 }
