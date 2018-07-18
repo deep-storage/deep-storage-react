@@ -68,7 +68,7 @@ ReactDOM.render((
 
 ```javascript
 function resetTimer() {
-    storage.setIn('timer')(0);
+    storage.deep('timer').set(0);
 }
 
 setInterval(function tick() {
