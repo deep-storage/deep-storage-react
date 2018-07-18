@@ -12,7 +12,8 @@ export const connect = <
   },
   ownProps?: {
     [key in keyof BaseComponentPropsType]?: BaseComponentPropsType[key]
-  }
+  },
+  additionalStorage: DeepStorage<any>[] = []
 ) => (
   BaseComponent: React.ComponentType<BaseComponentPropsType>
 ): React.ComponentType<ConnectedComponentPropType> => {
@@ -41,6 +42,9 @@ export const connect = <
           deepPropsValue.addSubscriber(this.subscriber);
         }
       }
+      for (const storage of additionalStorage) {
+        storage.addSubscriber(this.subscriber);
+      }
     }
     componentWillUnmount() {
       this.subscriber.onChange(() => {});
@@ -49,6 +53,9 @@ export const connect = <
         if (deepPropsValue) {
           deepPropsValue.removeSubscriber(this.subscriber);
         }
+      }
+      for (const storage of additionalStorage) {
+        storage.removeSubscriber(this.subscriber);
       }
     }
     shouldComponentUpdate(
