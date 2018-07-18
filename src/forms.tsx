@@ -64,14 +64,14 @@ export class DefaultDeepForm<Data> implements DeepForm<Data> {
     return this.storage.state.valid;
   }
 
-  reset = async () => {
+  public reset = async () => {
     if (this.initialState) {
       const state: any =
         typeof this.initialState === "function"
           ? await this.initialState()
           : this.initialState;
       const fields = {} as any;
-      for (let key of Object.keys(state)) {
+      for (const key of Object.keys(state)) {
         fields[key] = { value: state[key], touched: false };
       }
       return await this.storage.set({
@@ -90,7 +90,7 @@ export class DefaultDeepForm<Data> implements DeepForm<Data> {
     }
   };
 
-  changeField = async (fieldChange: FieldChange) => {
+  public changeField = async (fieldChange: FieldChange) => {
     try {
       await this.storage.update(prevState => {
         const fields = { ...prevState.fields };
@@ -119,7 +119,7 @@ export class DefaultDeepForm<Data> implements DeepForm<Data> {
       ) {
         await this.storage.update(prevState => {
           const fields = { ...prevState.fields };
-          for (let key of Object.keys(fields)) {
+          for (const key of Object.keys(fields)) {
             if (result.errors && result.errors[key]) {
               fields[key] = {
                 ...fields[key],
@@ -140,7 +140,7 @@ export class DefaultDeepForm<Data> implements DeepForm<Data> {
       } else {
         await this.storage.update(prevState => {
           const fields = { ...prevState.fields };
-          for (let key of Object.keys(fields)) {
+          for (const key of Object.keys(fields)) {
             fields[key] = { ...fields[key], error: undefined, valid: true };
           }
           return {
@@ -154,7 +154,7 @@ export class DefaultDeepForm<Data> implements DeepForm<Data> {
       await this.storage.deep("validating").set(false);
     }
   };
-  changeEvent = async (event: React.ChangeEvent<any>) => {
+  public changeEvent = async (event: React.ChangeEvent<any>) => {
     const {
       currentTarget: { name, value }
     } = event;
@@ -163,7 +163,7 @@ export class DefaultDeepForm<Data> implements DeepForm<Data> {
       value
     });
   };
-  blurEvent = async (event: React.FocusEvent<any>) => {
+  public blurEvent = async (event: React.FocusEvent<any>) => {
     const {
       currentTarget: { name }
     } = event;
@@ -180,13 +180,13 @@ export class DefaultDeepForm<Data> implements DeepForm<Data> {
   get form() {
     return this.storage.state;
   }
-  data<Data>() {
+  public data<Data1>() {
     const fields: any = this.storage.deep("fields").state;
     const result: any = {};
-    for (let key of Object.keys(fields)) {
+    for (const key of Object.keys(fields)) {
       result[key] = fields[key].value;
     }
-    return result as Data;
+    return result as Data1;
   }
 }
 

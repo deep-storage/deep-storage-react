@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import { DeepStorage, Path, Subscriber } from "deep-storage";
 
 export const connect = <
@@ -13,26 +14,28 @@ export const connect = <
   ownProps?: {
     [key in keyof BaseComponentPropsType]?: BaseComponentPropsType[key]
   },
-  additionalStorage: DeepStorage<any>[] = []
+  additionalStorage: Array<DeepStorage<any>> = []
 ) => (
   BaseComponent: React.ComponentType<BaseComponentPropsType>
 ): React.ComponentType<ConnectedComponentPropType> => {
-  const deepPropsKeys = Object.keys(
-    deepProps
-  ) as (keyof BaseComponentPropsType)[];
+  const deepPropsKeys = Object.keys(deepProps) as Array<
+    keyof BaseComponentPropsType
+  >;
 
   // if no deep props specified, just return regular component
-  if (deepPropsKeys.length === 0)
+  if (deepPropsKeys.length === 0) {
     return class extends React.Component<ConnectedComponentPropType, {}> {
-      render() {
+      public render() {
         return <BaseComponent {...ownProps || {}} {...this.props} />;
       }
     };
+  }
 
+  // tslint:disable-next-line:max-classes-per-file
   return class extends React.Component<ConnectedComponentPropType, {}> {
-    subscriber: Subscriber = new Subscriber();
+    public subscriber: Subscriber = new Subscriber();
 
-    componentDidMount() {
+    public componentDidMount() {
       this.subscriber.onChange(() => {
         this.forceUpdate();
       });
@@ -46,8 +49,10 @@ export const connect = <
         storage.addSubscriber(this.subscriber);
       }
     }
-    componentWillUnmount() {
-      this.subscriber.onChange(() => {});
+    public componentWillUnmount() {
+      this.subscriber.onChange(() => {
+        // noop
+      });
       for (const deepPropsKey of deepPropsKeys) {
         const deepPropsValue = deepProps[deepPropsKey];
         if (deepPropsValue) {
@@ -58,28 +63,32 @@ export const connect = <
         storage.removeSubscriber(this.subscriber);
       }
     }
-    shouldComponentUpdate(
+    public shouldComponentUpdate(
       nextProps: ConnectedComponentPropType,
       nextState: {}
     ) {
       const nextPropsAny: any = nextProps;
-      for (let key in nextPropsAny) {
-        const deepPropsValue = deepProps[key as keyof BaseComponentPropsType];
-        if (deepPropsValue) {
-          if (deepPropsValue.state !== nextPropsAny[key]) {
-            return true;
+      for (const key in nextPropsAny) {
+        if (nextPropsAny.hasOwnProperty(key)) {
+          const deepPropsValue = deepProps[key as keyof BaseComponentPropsType];
+          if (deepPropsValue) {
+            if (deepPropsValue.state !== nextPropsAny[key]) {
+              return true;
+            }
           }
         }
       }
       return false;
     }
-    render() {
+    public render() {
       const anyProps: any = this.props;
       const newProps: any = Object.assign({}, anyProps, ownProps || {});
-      for (let deepPropsKey in deepProps) {
-        const value = deepProps[deepPropsKey];
-        if (value) {
-          newProps[deepPropsKey] = value.state;
+      for (const deepPropsKey in deepProps) {
+        if (deepProps.hasOwnProperty(deepPropsKey)) {
+          const value = deepProps[deepPropsKey];
+          if (value) {
+            newProps[deepPropsKey] = value.state;
+          }
         }
       }
       return <BaseComponent {...newProps} />;

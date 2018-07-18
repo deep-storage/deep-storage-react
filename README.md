@@ -27,7 +27,7 @@ See an [implementation of TodoMVC that uses Deep Storage](https://github.com/dee
 
 ## Installing
 
-    npm install deep-storage-react # or yarn install deep-storage-react
+    npm install deep-storage-react # or yarn add deep-storage-react
 
 ## The gist of Deep Storage
 
