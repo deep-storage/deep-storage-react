@@ -23,7 +23,7 @@ export const connect = <
   >;
 
   // if no deep props specified, just return regular component
-  if (deepPropsKeys.length === 0) {
+  if (deepPropsKeys.length === 0 && additionalStorage.length === 0) {
     return class extends React.Component<ConnectedComponentPropType, {}> {
       public render() {
         return <BaseComponent {...ownProps || {}} {...this.props} />;
