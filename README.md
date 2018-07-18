@@ -33,40 +33,45 @@ See an [implementation of TodoMVC that uses Deep Storage](https://github.com/dee
 
 ### 1. Create a new Deep Storage instance and initialise its state
 
-    const storage = await deepStorage({
-        timer: 0
-    });
+```javascript
+const storage = await deepStorage({
+    timer: 0
+});
+```
 
 ### 2. Create a view that responds to changes in state
 
-    import {connect} from 'deep-storage-react';
+```javascript
+import { connect } from 'deep-storage-react';
 
-    class TimerView extends React.Component {
-        render() {
-            return (
-                <button onClick={this.onReset.bind(this)}>
-                    Seconds passed: {this.props.timer}
-                </button>
-            );
-        }
-        onReset () {
-            this.props.resetTimer();
-        }
-    };
+class TimerView extends React.Component {
+    render() {
+        return (
+            <button onClick={this.onReset.bind(this)}>
+                Seconds passed: {this.props.timer}
+            </button>
+        );
+    }
+    onReset () {
+        this.props.resetTimer();
+    }
+};
 
-    const DeepTimerView = connect({timer: storage.deep('timer')})(TimerView);
+const DeepTimerView = connect({timer: storage.deep('timer')})(TimerView);
 
-    ReactDOM.render((
-        <DeepTimerView resetTimer={resetTimer}/>
-    ), document.body);
+ReactDOM.render((
+    <DeepTimerView resetTimer={resetTimer}/>
+), document.body);
+```
 
 ### 3. Modify the State
 
-    function resetTimer() {
-        storage.setIn('timer')(0);
-    }
+```javascript
+function resetTimer() {
+    storage.setIn('timer')(0);
+}
 
-    setInterval(function tick() {
-        storage.deep('timer').update(prev => prev + 1);
-    }, 1000);
-
+setInterval(function tick() {
+    storage.deep('timer').update(prev => prev + 1);
+}, 1000);
+```
