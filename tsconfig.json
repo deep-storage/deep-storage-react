@@ -6,6 +6,7 @@
       "jsx": "react",
       "outDir": "./lib",
       "strict": true,
-      "esModuleInterop": true
+      "esModuleInterop": true,
+      "declaration": true
     }
   }
