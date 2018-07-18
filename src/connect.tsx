@@ -30,7 +30,11 @@ export const connect = <
 
   return class extends React.Component<ConnectedComponentPropType, {}> {
     subscriber: Subscriber = new Subscriber();
+
     componentDidMount() {
+      this.subscriber.onChange(() => {
+        this.forceUpdate();
+      });
       for (const deepPropsKey of deepPropsKeys) {
         const deepPropsValue = deepProps[deepPropsKey];
         if (deepPropsValue) {
@@ -39,6 +43,7 @@ export const connect = <
       }
     }
     componentWillUnmount() {
+      this.subscriber.onChange(() => {});
       for (const deepPropsKey of deepPropsKeys) {
         const deepPropsValue = deepProps[deepPropsKey];
         if (deepPropsValue) {
