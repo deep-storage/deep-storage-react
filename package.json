@@ -8,6 +8,13 @@
     "type": "git",
     "url": "https://github.com/deep-storage/deep-storage-react.git"
   },
+  "keywords": [
+    "deep-storage",
+    "observable",
+    "state managment",
+    "react",
+    "data flow"
+  ],
   "devDependencies": {
     "@types/enzyme": "^3.1.12",
     "@types/jest": "^23.3.0",
