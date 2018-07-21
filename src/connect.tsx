@@ -1,6 +1,28 @@
 import * as React from "react";
 
-import { DeepStorage, Path, Subscriber } from "deep-storage";
+import { DeepStorage, Subscriber } from "deep-storage";
+
+export const wire = <
+  ConnectedComponentPropType extends {},
+  BaseComponentPropsType extends {}
+>(
+  component: React.ComponentType<BaseComponentPropsType>,
+  deepProps: {
+    [key in keyof BaseComponentPropsType]?: DeepStorage<
+      BaseComponentPropsType[key]
+    >
+  },
+  ownProps?: {
+    [key in keyof BaseComponentPropsType]?: BaseComponentPropsType[key]
+  },
+  additionalStorage: Array<DeepStorage<any>> = []
+) => {
+  return connect<ConnectedComponentPropType, BaseComponentPropsType>(
+    deepProps,
+    ownProps,
+    additionalStorage
+  )(component);
+};
 
 export const connect = <
   ConnectedComponentPropType extends {},
