@@ -198,7 +198,7 @@ export function deepForm<Data = {}>(
     validating: false,
     pristine: true,
     valid: false,
-    fields: {}
+    fields: initialState || {}
   });
   return new DefaultDeepForm<Data>(storage, validator, initialState);
 }

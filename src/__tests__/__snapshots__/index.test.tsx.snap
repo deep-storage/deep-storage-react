@@ -60,6 +60,21 @@ exports[`connect: update 2`] = `
 </div>
 `;
 
+exports[`wire types: update 1`] = `
+<div>
+  <div
+    className="test"
+  >
+    one
+  </div>
+  <div
+    className="test"
+  >
+    two
+  </div>
+</div>
+`;
+
 exports[`wire: start 1`] = `
 <div>
   <div
